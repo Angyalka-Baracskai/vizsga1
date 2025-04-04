@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace vizsga
 {
-    public partial class tantargy : Form
-    {
-        public tantargy()
+        public class Tantargy
         {
-            InitializeComponent();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
+            public int tantargy_id { get; set; }
+            public string tantargy_nev { get; set; }
+            public int oradij { get; set; }
+        public override string ToString()
         {
-            this.Close();
+            return this.tantargy_nev;
         }
     }
 }

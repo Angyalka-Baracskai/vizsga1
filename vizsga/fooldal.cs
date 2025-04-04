@@ -26,7 +26,7 @@ namespace vizsga
 
         private void tanar_Click(object sender, EventArgs e)
         {
-            tanar form2 = new tanar(); // példányosítottuk a Form2 osztályt
+            tanarform form2 = new tanarform(); // példányosítottuk a Form2 osztályt
             this.Hide(); // elrejtettük a fooldal ablakot
             form2.FormClosed += (sendObject, args) =>
             {
@@ -41,7 +41,7 @@ namespace vizsga
 
         private void diak_Click(object sender, EventArgs e)
         {
-            diak form3 = new diak(); // példányosítottuk a Form3 osztályt
+            diakform form3 = new diakform(); // példányosítottuk a Form3 osztályt
             this.Hide(); // elrejtettük a fooldal ablakot
             form3.Show(); // megjelenítettük a Form3 ablakot
             form3.FormClosed += (sendObject, args) =>
@@ -57,8 +57,8 @@ namespace vizsga
 
         private void tantargy_Click(object sender, EventArgs e)
         {
-            
-            tantargy form4 = new tantargy(); // példányosítottuk a Form4 osztályt
+
+            tantargyform form4 = new tantargyform(); // példányosítottuk a Form4 osztályt
             this.Hide(); // elrejtettük a fooldal ablakot
             form4.Show(); // megjelenítettük a Form4 ablakot
             form4.FormClosed += (sendObject, args) =>
@@ -74,7 +74,8 @@ namespace vizsga
 
         private void fooldal_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult valasztasEredmenye = MessageBox.Show("Valóban szeretne kilépni?","Exit alert", MessageBoxButtons.YesNo);
+            //messagebox-al megkérdezzük hogy tényleg be akarja e zárni, ha igenre nyom bezárja ha a nemre akkor ektünik a felugró ablak és a program továbbra is fut
+            DialogResult valasztasEredmenye = MessageBox.Show("Valóban szeretne kilépni?", "Exit alert", MessageBoxButtons.YesNo);
             if (valasztasEredmenye == DialogResult.Yes)
             {
                 Environment.Exit(0);
@@ -85,45 +86,23 @@ namespace vizsga
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            // én github oldalam linkje, ha rámegy megnyitjta az oldalam
+            //trackbar jobbra húzásával fekete lesz a háttér míg balra húzásnál az alapértelmezett fehér 
+            Color backColor = (trackBar1.Value == 1) ? Color.FromArgb(36,36,36)  : Color.White;
+            Color foreColor = (trackBar1.Value == 0) ? Color.Black : Color.White;
+            this.BackColor = backColor;
+            this.ForeColor = foreColor;
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
             Process.Start(new ProcessStartInfo
             {
-                FileName = "https://github.com/Angyalka-Baracskai",
+                FileName = "https://github.com/P3T8/Vizsgaremek",
                 UseShellExecute = true
             });
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            // Peti github oldal linkje, ha rámegy megnyitjta az oldala
-
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://github.com/P3T8",
-                UseShellExecute = true
-            });
-        }
-
-        public bool sun = true;
-        //string[] labels = new Label[] { label1, label2, label3};
-
-    private void pictureBox3_Click(object sender, EventArgs e)
-        {
-           if(sun == true)
-           {
-                this.BackColor = Color.White;
-           }
-        }
-
-        private void pictureBox4_Click(object sender, EventArgs e)
-        {
-            /*if (sun != true)
-            {
-                this.BackColor = Color.Black;
-                labels.ForeColor = Color.Black;
-            }*/
-        }
     }
 }

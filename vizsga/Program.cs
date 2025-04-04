@@ -8,15 +8,14 @@ namespace vizsga
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
-        [STAThread]
+        
+        public static Adatbazis db = new Adatbazis();
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new fooldal());
+
         }
     }
 }
