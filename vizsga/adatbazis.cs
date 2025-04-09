@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,10 @@ namespace vizsga
     {
         MySqlConnection connection = null;
         MySqlCommand command = null;
+        //private string connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=vizsga;Integrated Security=True";
+        private string connectionString = "Data Source=localhost\\SQLEXPRESS;Initial Catalog=vizsga;Integrated Security=True";
+
+
         public Adatbazis()
         {
             MySqlConnectionStringBuilder sb = new MySqlConnectionStringBuilder();
@@ -215,6 +220,118 @@ namespace vizsga
             if(connection.State != System.Data.ConnectionState.Open)
             {
                 connection.Open();
+            }
+        }
+
+        public void TanarAktivalas(int tanarId)
+        {
+            try
+            {
+                nyit(); // már megvan a connection és command
+                command.CommandText = "UPDATE tanar SET aktiv = 'true' WHERE tanar_id = @id";
+                command.Parameters.Clear(); // előző paraméterek törlése
+                command.Parameters.AddWithValue("@id", tanarId);
+                command.ExecuteNonQuery();
+                zar();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Hiba az aktiválás során: " + ex.Message);
+            }
+        }
+
+        public void TanarTorlese(int tanarId)
+        {
+            try
+            {
+                nyit(); // már megvan a connection és command
+                command.CommandText = "DELETE FROM `tanar` WHERE `tanar_id` = @id";
+                command.Parameters.Clear(); // előző paraméterek törlése
+                command.Parameters.AddWithValue("@id", tanarId);
+                command.ExecuteNonQuery();
+                zar();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Hiba az aktiválás során: " + ex.Message);
+            }
+        }
+
+        public void DiakAktivalas(int diak_id)
+        {
+            try
+            {
+                nyit(); // már megvan a connection és command
+                command.CommandText = "UPDATE diak SET aktiv = 'true' WHERE diak_id = @id";
+                command.Parameters.Clear(); // előző paraméterek törlése
+                command.Parameters.AddWithValue("@id", diak_id);
+                command.ExecuteNonQuery();
+                zar();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Hiba az aktiválás során: " + ex.Message);
+            }
+        }
+
+        public void DiakTorlese(int diak_id)
+        {
+            try
+            {
+                nyit(); // már megvan a connection és command
+                command.CommandText = "DELETE FROM diak WHERE diak_id = @id";
+                command.Parameters.Clear(); // előző paraméterek törlése
+                command.Parameters.AddWithValue("@id", diak_id);
+                command.ExecuteNonQuery();
+                zar();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Hiba az aktiválás során: " + ex.Message);
+            }
+        }
+
+        public void TantargyHozzaadas(Tantargy tantargy)
+        {
+            try
+            {
+                nyit(); // megnyitjuk a kapcsolatot
+                command.CommandText = "INSERT INTO `tantargyak`(`tantargy_nev`, `oradij`) VALUES (@tantargy_nev, @oradij)";
+                command.Parameters.Clear(); // töröljük az előző paramétereket
+                command.Parameters.AddWithValue("@tantargy_nev", tantargy.tantargy_nev);
+                command.Parameters.AddWithValue("@oradij", tantargy.oradij);
+                command.ExecuteNonQuery(); // végrehajtjuk a beszúrást
+                zar(); // bezárjuk a kapcsolatot
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Hiba az adat beszúrása során: " + ex.Message);
+            }
+        }
+
+        public void TantargyTorlese(int tantargyId)
+        {
+            try
+            {
+                nyit();
+                command.CommandText = "DELETE FROM tantargyak WHERE tantargy_id = @id";
+                command.Parameters.Clear();
+                command.Parameters.AddWithValue("@id", tantargyId);
+                int result = command.ExecuteNonQuery();
+                zar();
+
+                if (result > 0)
+                {
+                    MessageBox.Show("Tantárgy sikeresen törölve.");
+                }
+                else
+                {
+                    MessageBox.Show("Nem sikerült törölni a tantárgyat.");
+                }
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show("Hiba a törlés során: " + ex.Message);
             }
         }
     }

@@ -64,18 +64,22 @@ namespace vizsga
             });
         }
 
-        private void listBox_folyamatban_SelectedIndexChanged(object sender, EventArgs e)
+        public void listBox_folyamatban_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox_folyamatban.SelectedIndex<0)
             {
                 return;
             }
             Tanar kivalasztottTanar = (Tanar)listBox_folyamatban.SelectedItem;
-            TanarJovahagyasa form = new TanarJovahagyasa(kivalasztottTanar);
+            TanarJovahagyasa form = new TanarJovahagyasa(kivalasztottTanar, this);
             form.ShowDialog();
+            // Frissítés visszatérés után
+            listBox_folyamatban.Items.Clear();
+            listBox_regisztraltak.Items.Clear();
+            adatfrisites();
         }
 
-        private void listBox_regisztraltak_SelectedIndexChanged(object sender, EventArgs e)
+        public void listBox_regisztraltak_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBox_regisztraltak.SelectedIndex < 0)
             {
@@ -84,6 +88,9 @@ namespace vizsga
             Tanar kivalasztottTanar = (Tanar)listBox_regisztraltak.SelectedItem;
             TanarRegisztralt form = new TanarRegisztralt(kivalasztottTanar);
             form.ShowDialog();
+            listBox_folyamatban.Items.Clear();
+            listBox_regisztraltak.Items.Clear();
+            adatfrisites();
         }
     }
 }

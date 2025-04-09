@@ -119,7 +119,9 @@ namespace vizsga
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+            Program.db.TanarTorlese(tanar.TanarId);
+            MessageBox.Show("Tanar sikeresen törölve!");
+            this.Close();
         }
     }
 }

@@ -35,12 +35,11 @@ namespace vizsga
             listBox_elfogadott.ForeColor = foreColor;
             button1.BackColor = backColor;
             button1.ForeColor = foreColor;
-            button2.BackColor = backColor;
-            button2.ForeColor = foreColor;
             textBox1.BackColor = backColor;
             textBox1.ForeColor = foreColor;
             textBox2.BackColor = backColor;
             textBox2.ForeColor = foreColor;
+            gomb.ForeColor = foreColor;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -52,25 +51,54 @@ namespace vizsga
             });
         }
 
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+
+        private void tantargy_Load(object sender, EventArgs e)
+        {
+            adatfrisites();
+        }
+
+        private void adatfrisites()
+        {
+            //elfogadott = Program.db.getTantargyelfogadott();
+            //listBox_elfogadott.Items.AddRange(elfogadott.ToArray());
+
+            listBox_elfogadott.Items.Clear(); // Tisztítsd meg a ListBox-ot
+            elfogadott = Program.db.getTantargyelfogadott();
+            listBox_elfogadott.Items.AddRange(elfogadott.ToArray());
+        }
+
+        
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button3_Click_1(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(textBox1.Text) && !string.IsNullOrEmpty(textBox2.Text))
             {
                 try
                 {
+                    // Új tantárgy példány létrehozása
                     Tantargy ujTantargy = new Tantargy
                     {
                         tantargy_nev = textBox1.Text,
                         oradij = Convert.ToInt32(textBox2.Text)
                     };
 
+                    // Beszúrás az adatbázisba
+                    Program.db.TantargyHozzaadas(ujTantargy);
+
+                    // Frissítjük a listát
                     adatfrisites();
+
+                    // Töröljük a TextBoxok tartalmát
                     textBox1.Text = "";
                     textBox2.Text = "";
                 }
@@ -85,23 +113,25 @@ namespace vizsga
             }
         }
 
-
-        private void tantargy_Load(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            adatfrisites();
-        }
+            if (listBox_elfogadott.SelectedItem != null)
+            {
+                Tantargy kivalasztott = (Tantargy)listBox_elfogadott.SelectedItem;
 
-        private void adatfrisites()
-        {
-            elfogadott = Program.db.getTantargyelfogadott();
-            listBox_elfogadott.Items.AddRange(elfogadott.ToArray());
-        }
+                var megerosites = MessageBox.Show($"Biztosan törölni szeretnéd a tantárgyat: {kivalasztott.tantargy_nev}?",
+                    "Megerősítés", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-        
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
+                if (megerosites == DialogResult.Yes)
+                {
+                    Program.db.TantargyTorlese(kivalasztott.tantargy_id);
+                    adatfrisites(); 
+                }
+            }
+            else
+            {
+                MessageBox.Show("Nincs kiválasztva tantárgy!", "Figyelmeztetés", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

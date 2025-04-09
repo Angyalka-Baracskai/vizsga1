@@ -43,7 +43,7 @@ namespace vizsga
         {
             diakform form3 = new diakform(); // példányosítottuk a Form3 osztályt
             this.Hide(); // elrejtettük a fooldal ablakot
-            form3.Show(); // megjelenítettük a Form3 ablakot
+            //form3.Show(); // megjelenítettük a Form3 ablakot
             form3.FormClosed += (sendObject, args) =>
             {
                 // eltávolítjuk a lehetséges hivatkozásokat a Form3 objektumra

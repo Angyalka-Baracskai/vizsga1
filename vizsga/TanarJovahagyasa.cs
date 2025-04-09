@@ -14,15 +14,18 @@ namespace vizsga
     public partial class TanarJovahagyasa : Form
     {
         Tanar tanar = null;
-        List<Tanar> folyamatban = new List<Tanar>();
-        public TanarJovahagyasa(Tanar kapottTanar)
+        //List<Tanar> folyamatban = new List<Tanar>();
+       public  tanarform szulofrom;
+        public TanarJovahagyasa(Tanar kapottTanar, tanarform form)
         {
             InitializeComponent();
             tanar = kapottTanar;
+            szulofrom = form;
         }
 
         private void TanarJovahagyasa_Load(object sender, EventArgs e)
         {
+            label29.Text = tanar.TanarId.ToString();
             label15.Text = tanar.TNev;
             label16.Text = tanar.Iranyitoszam;
             label17.Text = tanar.Varos;
@@ -190,14 +193,20 @@ namespace vizsga
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
-            if(true)
-            {
-                folyamatban = Program.db.getTanarFolyamatban();
-            }
+        { // Csak adatbázisban állítjuk át az értéket
+            Program.db.TanarAktivalas(tanar.TanarId);
+            MessageBox.Show("Tanar sikeresen aktiválva!");
+            this.Close();
         }
 
         private void button3_Click(object sender, EventArgs e)
+        {
+            Program.db.TanarTorlese(tanar.TanarId);
+            MessageBox.Show("Tanar sikeresen törölve!");
+            this.Close();
+        }
+
+        private void label29_Click(object sender, EventArgs e)
         {
 
         }

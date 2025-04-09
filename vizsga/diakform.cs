@@ -71,6 +71,9 @@ namespace vizsga
             Diak kivalasztottdiak = (Diak)listBox_regisztralt_diak.SelectedItem;
             DiakRegisztralt form = new DiakRegisztralt(kivalasztottdiak);
             form.ShowDialog();
+            listBox_varakozik_diak.Items.Clear();
+            listBox_regisztralt_diak.Items.Clear();
+            adatfrisites();
         }
 
         private void listBox_varakozik_diak_SelectedIndexChanged(object sender, EventArgs e)
@@ -80,8 +83,11 @@ namespace vizsga
                 return;
             }
             Diak kivalasztottdiak = (Diak)listBox_varakozik_diak.SelectedItem;
-            DiakVarakozik form = new DiakVarakozik(kivalasztottdiak);
+            DiakVarakozik form = new DiakVarakozik(kivalasztottdiak, this);
             form.ShowDialog();
+            listBox_varakozik_diak.Items.Clear();
+            listBox_regisztralt_diak.Items.Clear();
+            adatfrisites();
         }
     }
 }

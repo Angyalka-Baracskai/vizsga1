@@ -22,7 +22,8 @@ namespace vizsga
 
         private void DiakRegisztralt_Load(object sender, EventArgs e)
         {
-            label14.Text = diak.d_nev;
+            label8.Text = diak.diak_id.ToString();
+            label4.Text = diak.d_nev;
             label5.Text = diak.email;
             label6.Text = diak.aktiv.ToString();
         }
@@ -34,7 +35,9 @@ namespace vizsga
 
         private void button3_Click(object sender, EventArgs e)
         {
-            
+            Program.db.DiakTorlese(diak.diak_id);
+            MessageBox.Show("Diák sikeresen törölve!");
+            this.Close();
         }
 
         private void button2_Click(object sender, EventArgs e)
